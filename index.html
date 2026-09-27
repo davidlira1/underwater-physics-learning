@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weight of a Column of Water</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="scene">
+        <svg class="pressure-leader" data-show-at="12" aria-hidden="true">
+          <defs>
+            <marker
+              id="pressure-arrowhead"
+              markerWidth="8"
+              markerHeight="8"
+              refX="7"
+              refY="4"
+              orient="auto"
+            >
+              <path d="M0 0 L8 4 L0 8 Z" fill="currentColor" />
+            </marker>
+          </defs>
+          <line class="pressure-leader-line" marker-end="url(#pressure-arrowhead)" />
+        </svg>
+        <svg class="scene-leader force-pressure-leader" data-show-at="18" aria-hidden="true">
+          <defs>
+            <marker
+              id="force-pressure-arrowhead"
+              markerWidth="8"
+              markerHeight="8"
+              refX="7"
+              refY="4"
+              orient="auto"
+            >
+              <path d="M0 0 L8 4 L0 8 Z" fill="currentColor" />
+            </marker>
+          </defs>
+          <line class="force-pressure-leader-line" marker-end="url(#force-pressure-arrowhead)" />
+        </svg>
+        <svg class="scene-leader bottom-pressure-leader" data-show-at="22" aria-hidden="true">
+          <defs>
+            <marker
+              id="bottom-pressure-arrowhead"
+              markerWidth="8"
+              markerHeight="8"
+              refX="7"
+              refY="4"
+              orient="auto"
+            >
+              <path d="M0 0 L8 4 L0 8 Z" fill="currentColor" />
+            </marker>
+          </defs>
+          <line class="bottom-pressure-leader-line" marker-end="url(#bottom-pressure-arrowhead)" />
+        </svg>
+        <svg class="scene-leader buoyant-leader" data-show-at="26" aria-hidden="true">
+          <defs>
+            <marker
+              id="buoyant-arrowhead"
+              markerWidth="8"
+              markerHeight="8"
+              refX="7"
+              refY="4"
+              orient="auto"
+            >
+              <path d="M0 0 L8 4 L0 8 Z" fill="currentColor" />
+            </marker>
+          </defs>
+          <line class="buoyant-leader-line" marker-end="url(#buoyant-arrowhead)" />
+        </svg>
+        <svg class="scene-leader floater-weight-leader" data-show-at="32" aria-hidden="true">
+          <defs>
+            <marker
+              id="floater-weight-arrowhead"
+              markerWidth="8"
+              markerHeight="8"
+              refX="7"
+              refY="4"
+              orient="auto"
+            >
+              <path d="M0 0 L8 4 L0 8 Z" fill="currentColor" />
+            </marker>
+          </defs>
+          <line class="floater-weight-leader-line" marker-end="url(#floater-weight-arrowhead)" />
+        </svg>
+        <div class="tank">
+          <svg
+            class="cylinder"
+            viewBox="0 0 96 400"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <defs>
+              <path
+                id="pressure-force-arrow"
+                d="M0 0 V 6.2 H -1.6 L 0 9.4 L 1.6 6.2 H 0 Z"
+              />
+              <path
+                id="pressure-force-arrow-up"
+                d="M0 9.4 V 3.2 H -1.6 L 0 0 L 1.6 3.2 H 0 Z"
+              />
+            </defs>
+            <ellipse cx="48" cy="372" rx="30" ry="11" fill="#fff" stroke="#1a1a1a" stroke-width="1.2" />
+            <rect x="18" y="196" width="60" height="176" fill="#fff" />
+            <line x1="18" y1="196" x2="18" y2="372" stroke="#1a1a1a" stroke-width="1.2" />
+            <line x1="78" y1="196" x2="78" y2="372" stroke="#1a1a1a" stroke-width="1.2" />
+            <ellipse
+              class="water-surface"
+              cx="48"
+              cy="196"
+              rx="30"
+              ry="11"
+              fill="#fff"
+              stroke="#1a1a1a"
+              stroke-width="1.2"
+            />
+            <line
+              class="glass-outline"
+              data-show-at="2"
+              x1="18"
+              y1="12"
+              x2="18"
+              y2="196"
+              stroke="#1a1a1a"
+              stroke-width="1.2"
+              stroke-dasharray="5 3.5"
+            />
+            <line
+              class="glass-outline"
+              data-show-at="2"
+              x1="78"
+              y1="12"
+              x2="78"
+              y2="196"
+              stroke="#1a1a1a"
+              stroke-width="1.2"
+              stroke-dasharray="5 3.5"
+            />
+            <ellipse
+              class="glass-outline"
+              data-show-at="2"
+              cx="48"
+              cy="12"
+              rx="30"
+              ry="11"
+              fill="none"
+              stroke="#1a1a1a"
+              stroke-width="1.2"
+              stroke-dasharray="5 3.5"
+            />
+            <path
+              class="weight-arrow"
+              data-show-at="2"
+              d="M44.6 40 V 148 H 35 L 48 174 L 61 148 H 51.4 V 40 Z"
+              fill="#fff"
+              stroke="#1a1a1a"
+              stroke-width="1.3"
+              stroke-linejoin="round"
+            />
+            <path
+              class="floater-weight-arrow"
+              data-show-at="32"
+              d="M44.6 223 V 331 H 35 L 48 357 L 61 331 H 51.4 V 223 Z"
+              fill="#fff"
+              stroke="#1a1a1a"
+              stroke-width="1.3"
+              stroke-linejoin="round"
+            />
+            <g class="pressure-arrows" data-show-at="18">
+              <use href="#pressure-force-arrow" x="23" y="192.6" />
+              <use href="#pressure-force-arrow" x="28" y="191.3" />
+              <use href="#pressure-force-arrow" x="33" y="190.6" />
+              <use href="#pressure-force-arrow" x="38" y="190.2" />
+              <use href="#pressure-force-arrow" x="43" y="190" />
+              <use href="#pressure-force-arrow" x="48" y="189.9" />
+              <use href="#pressure-force-arrow" x="53" y="190" />
+              <use href="#pressure-force-arrow" x="58" y="190.2" />
+              <use href="#pressure-force-arrow" x="63" y="190.6" />
+              <use href="#pressure-force-arrow" x="68" y="191.3" />
+              <use href="#pressure-force-arrow" x="73" y="192.6" />
+            </g>
+            <path
+              class="buoyant-arrow"
+              data-show-at="26"
+              d="M44.6 520 V 412 H 35 L 48 386 L 61 412 H 51.4 V 520 Z"
+            />
+            <g class="bottom-pressure" data-show-at="22">
+              <ellipse class="bottom-surface" cx="48" cy="372" rx="30" ry="11" />
+              <g class="bottom-pressure-arrows">
+                <use href="#pressure-force-arrow-up" x="23" y="361.6" />
+                <use href="#pressure-force-arrow-up" x="28" y="362.9" />
+                <use href="#pressure-force-arrow-up" x="33" y="363.6" />
+                <use href="#pressure-force-arrow-up" x="38" y="364" />
+                <use href="#pressure-force-arrow-up" x="43" y="364.2" />
+                <use href="#pressure-force-arrow-up" x="48" y="364.3" />
+                <use href="#pressure-force-arrow-up" x="53" y="364.2" />
+                <use href="#pressure-force-arrow-up" x="58" y="364" />
+                <use href="#pressure-force-arrow-up" x="63" y="363.6" />
+                <use href="#pressure-force-arrow-up" x="68" y="362.9" />
+                <use href="#pressure-force-arrow-up" x="73" y="361.6" />
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="copy">
+          <span class="arrow" data-show-at="3" aria-hidden="true"></span>
+          <p class="force-label ghost-source-force" data-show-at="3">
+            Gravitational force<br />on water column
+          </p>
+          <div class="first-eq">
+            <aside class="callout mass-callout" data-show-at="5" data-hide-at="9">mass = density * volume</aside>
+            <p data-show-at="4">
+              =
+              <span class="mass-gravity-term">mass of water * gravity</span>
+              <span
+                class="ghost-source-product ghost-target ghost-target-condensed-product"
+                data-show-at="9"
+              >density of water * <span class="term-swap height-depth-swap"><span class="term-from ghost-target ghost-target-height-term">height of water column</span><span class="term-to ghost-source-depth-term" data-show-at="10">depth of top of floater</span></span> * surface area of top of floater * gravity</span>
+            </p>
+          </div>
+
+          <div class="eq volume-eq" data-show-at="6" data-hide-at="9">
+            =
+            <span class="ghost-target ghost-target-mass-product">
+              density of water *
+              <span class="volume-term">
+                <span class="callout volume-callout" data-show-at="7">volume = height * surface area</span>
+                volume of water
+              </span>
+            </span>
+            * gravity
+          </div>
+          <p class="eq expand-eq" data-show-at="8" data-hide-at="9">
+            =
+            <span class="ghost-source-condense">
+              density of water *
+              <span class="ghost-target ghost-target-volume-product">height of water column * surface area of top of floater</span>
+              * gravity
+            </span>
+          </p>
+
+          <p class="pressure-label" data-show-at="12">
+            <span class="ghost-source-pressure">Pressure of water</span><br />on top of floater
+          </p>
+          <div class="pressure-eq" data-show-at="13">
+            <div class="eq pressure-condensed" data-show-at="17">
+              =
+              <span class="ghost-source-depth ghost-target ghost-target-pressure-condensed">density of water * depth of top of floater * gravity</span>
+            </div>
+            <div class="sub-row pressure-fraction-row" data-hide-at="17">
+              <span>=</span>
+              <span class="fraction">
+                <span class="num ghost-target ghost-target-force">Gravitational force on water column</span>
+                <span class="bar" aria-hidden="true"></span>
+                <span class="den ghost-source-area">surface area of top of floater</span>
+              </span>
+            </div>
+            <div class="pressure-eq-sub" data-show-at="14" data-hide-at="17">
+              <div class="sub-col">
+                <div class="sub-row">
+                  <span>=</span>
+                  <span class="fraction-wrap">
+                    <span class="fraction">
+                      <span class="num ghost-target ghost-target-product">density of water * depth of top of floater * <span class="cancel-term">surface area of top of floater</span> * gravity</span>
+                      <span class="bar" aria-hidden="true"></span>
+                      <span class="den"><span class="cancel-term ghost-target ghost-target-area">surface area of top of floater</span></span>
+                    </span>
+                    <svg class="cross-out" data-show-at="15" aria-hidden="true">
+                      <line pathLength="1" />
+                    </svg>
+                  </span>
+                </div>
+                <p class="eq depth-eq" data-show-at="16">
+                  =
+                  <span class="ghost-source-pressure-condense ghost-target ghost-target-depth-simplify">density of water * depth of top of floater * gravity</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <p class="force-pressure-label ghost-source-force-top" data-show-at="18">Force of pressure<br />at top</p>
+          <div class="eq force-pressure-eq" data-show-at="19">
+            <span>
+              =
+              <span class="pressure-area-term">
+                <span class="ghost-target ghost-target-pressure">Pressure of water</span>
+                * <span class="ghost-source-top-area">surface area</span>
+              </span>
+              <span
+                class="ghost-source-top-product ghost-target ghost-target-condensed-top-product"
+                data-show-at="21"
+              >density of water * depth of top of floater * gravity * surface area</span>
+            </span>
+            <span class="force-pressure-sub" data-show-at="20" data-hide-at="21">
+              =
+              <span class="ghost-source-top-expand">
+                <span class="ghost-target ghost-target-depth">density of water * depth of top of floater * gravity</span>
+                * <span class="ghost-target ghost-target-top-area">surface area</span>
+              </span>
+            </span>
+          </div>
+
+          <p class="bottom-pressure-label ghost-source-force-bottom" data-show-at="22">Force of pressure<br />at bottom</p>
+          <p class="buoyant-label ghost-source-buoyant-force" data-show-at="26">Buoyant Force</p>
+          <div class="eq buoyant-eq" data-show-at="27">
+            <span>
+              =
+              <span class="buoyant-diff-term">
+                <span class="ghost-target ghost-target-force-bottom">Force of pressure at bottom</span>
+                -
+                <span class="ghost-target ghost-target-force-top">Force of pressure at top</span>
+              </span>
+              <span
+                class="ghost-source-buoyant-height ghost-target ghost-target-condensed-buoyant"
+                data-show-at="31"
+              >height of floater * density of water * gravity * surface area</span>
+            </span>
+            <div class="eq buoyant-sub" data-show-at="28" data-hide-at="31">
+              =
+              <span class="ghost-target ghost-target-bottom-product">density of water * <span class="ghost-source-bottom-depth">depth of bottom of floater</span> * gravity * surface area</span>
+              -
+              <span class="ghost-target ghost-target-top-product">density of water * <span class="ghost-source-top-depth">depth of top of floater</span> * gravity * surface area</span>
+            </div>
+            <div class="eq buoyant-factored" data-show-at="29" data-hide-at="31">
+              =
+              <span class="ghost-source-depth-diff">(
+              <span class="ghost-target ghost-target-bottom-depth">depth of bottom of floater</span>
+              -
+              <span class="ghost-target ghost-target-top-depth">depth of top of floater</span>
+              )</span>
+              * (density of water * gravity * surface area)
+            </div>
+            <div class="eq buoyant-height" data-show-at="30" data-hide-at="31">
+              =
+              <span class="ghost-source-buoyant-height-expand">
+                <span class="ghost-target ghost-target-height">height of floater</span>
+                * density of water * gravity * surface area
+              </span>
+            </div>
+          </div>
+          <p class="floater-weight-label ghost-source-floater-weight-name" data-show-at="32">Force of Weight<br />of floater</p>
+          <div class="eq floater-weight-eq" data-show-at="33">
+            =
+            <span class="ghost-source-floater-mg">mass of floater * gravity</span>
+          </div>
+          <p class="neutral-label" data-show-at="34">Neutral Buoyancy</p>
+          <div class="eq neutral-eq" data-show-at="34">
+            =>
+            <span class="ghost-target ghost-target-neutral-buoyant">Buoyant Force</span>
+            =
+            <span class="ghost-target ghost-target-neutral-weight">Force of Weight of floater</span>
+          </div>
+          <div class="eq neutral-sub" data-show-at="35">
+            <span class="ghost-target ghost-target-buoyant-height">height of floater * density of water * gravity * surface area</span>
+            =
+            <span class="ghost-target ghost-target-floater-mg">mass of floater * gravity</span>
+          </div>
+          <div class="eq bottom-pressure-eq" data-show-at="23">
+            <span>
+              =
+              <span class="pressure-area-term-bottom ghost-target ghost-target-pressure-area-bottom">Pressure of water * surface area</span>
+              <span
+                class="ghost-source-bottom-product ghost-target ghost-target-condensed-bottom-product"
+                data-show-at="25"
+              >density of water * depth of bottom of floater * gravity * surface area</span>
+            </span>
+            <span class="bottom-pressure-sub" data-show-at="24" data-hide-at="25">
+              =
+              <span class="ghost-source-bottom-expand">density of water * depth of bottom of floater * gravity * surface area</span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <div class="controls">
+        <button type="button" id="back">Back</button>
+        <button type="button" id="next">Next</button>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
