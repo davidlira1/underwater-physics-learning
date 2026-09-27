@@ -69,7 +69,7 @@
           </defs>
           <line class="buoyant-leader-line" marker-end="url(#buoyant-arrowhead)" />
         </svg>
-        <svg class="scene-leader floater-weight-leader" data-show-at="32" aria-hidden="true">
+        <svg class="scene-leader floater-weight-leader" data-show-at="34" aria-hidden="true">
           <defs>
             <marker
               id="floater-weight-arrowhead"
@@ -160,7 +160,7 @@
             />
             <path
               class="floater-weight-arrow"
-              data-show-at="32"
+              data-show-at="34"
               d="M44.6 223 V 331 H 35 L 48 357 L 61 331 H 51.4 V 223 Z"
               fill="#fff"
               stroke="#1a1a1a"
@@ -303,7 +303,10 @@
           </div>
 
           <p class="bottom-pressure-label ghost-source-force-bottom" data-show-at="22">Force of pressure<br />at bottom</p>
-          <p class="buoyant-label ghost-source-buoyant-force" data-show-at="26">Buoyant Force</p>
+          <div class="buoyant-label-wrap">
+            <p class="buoyant-label ghost-source-buoyant-force" data-show-at="26">Buoyant Force</p>
+            <p class="principle-name" data-show-at="26">(Archimedes' Principle)</p>
+          </div>
           <div class="eq buoyant-eq" data-show-at="27">
             <span>
               =
@@ -315,7 +318,7 @@
               <span
                 class="ghost-source-buoyant-height ghost-target ghost-target-condensed-buoyant"
                 data-show-at="31"
-              >height of floater * density of water * gravity * surface area</span>
+              ><span class="height-front"><span class="ghost-source-height-end">height of floater</span> * </span>density of water * gravity * <span class="area-height-term ghost-source-area-height">surface area<span class="height-back" data-show-at="32"> * <span class="ghost-target ghost-target-height-end">height of floater</span></span></span><span class="floater-volume-term ghost-target ghost-target-floater-volume" data-show-at="33">volume of water displaced</span></span>
             </span>
             <div class="eq buoyant-sub" data-show-at="28" data-hide-at="31">
               =
@@ -340,22 +343,25 @@
               </span>
             </div>
           </div>
-          <p class="floater-weight-label ghost-source-floater-weight-name" data-show-at="32">Force of Weight<br />of floater</p>
-          <div class="eq floater-weight-eq" data-show-at="33">
+          <p class="floater-weight-label ghost-source-floater-weight-name" data-show-at="34">Force of Weight<br />of floater</p>
+          <div class="eq floater-weight-eq" data-show-at="35">
             =
             <span class="ghost-source-floater-mg">mass of floater * gravity</span>
           </div>
-          <p class="neutral-label" data-show-at="34">Neutral Buoyancy</p>
-          <div class="eq neutral-eq" data-show-at="34">
+          <p class="neutral-label" data-show-at="36">Neutral Buoyancy</p>
+          <div class="eq neutral-eq" data-show-at="36">
             =>
             <span class="ghost-target ghost-target-neutral-buoyant">Buoyant Force</span>
             =
             <span class="ghost-target ghost-target-neutral-weight">Force of Weight of floater</span>
           </div>
-          <div class="eq neutral-sub" data-show-at="35">
-            <span class="ghost-target ghost-target-buoyant-height">height of floater * density of water * gravity * surface area</span>
-            =
-            <span class="ghost-target ghost-target-floater-mg">mass of floater * gravity</span>
+          <div class="eq neutral-sub" data-show-at="37">
+            <span class="neutral-left-col">
+              <span class="ghost-target ghost-target-buoyant-height">density of water<span class="gravity-factor"> * <span class="gravity-word">gravity</span></span><span class="slide-volume ghost-target"> * volume of water displaced</span></span>
+              <span class="mass-water-note" data-show-at="38">(mass of displaced water)</span>
+            </span>
+            <span class="slide-eq ghost-target">=</span>
+            <span class="ghost-target ghost-target-floater-mg"><span class="slide-mass ghost-target">mass of floater</span><span class="gravity-factor"> * <span class="gravity-word">gravity</span></span></span>
           </div>
           <div class="eq bottom-pressure-eq" data-show-at="23">
             <span>

@@ -64,9 +64,20 @@ const buoyantHeightSource = document.querySelector(".ghost-source-buoyant-height
 const buoyantHeightExpand = document.querySelector(".ghost-source-buoyant-height-expand");
 const condensedBuoyant = document.querySelector(".ghost-target-condensed-buoyant");
 const buoyantDiffTerm = document.querySelector(".buoyant-diff-term");
+const heightFront = document.querySelector(".height-front");
+const heightEndSource = document.querySelector(".ghost-source-height-end");
+const heightEndTarget = document.querySelector(".ghost-target-height-end");
+const areaHeightTerm = document.querySelector(".area-height-term");
+const areaHeightSource = document.querySelector(".ghost-source-area-height");
+const floaterVolumeTarget = document.querySelector(".ghost-target-floater-volume");
 const buoyantHeightTarget = document.querySelector(".ghost-target-buoyant-height");
 const floaterMgSource = document.querySelector(".ghost-source-floater-mg");
 const floaterMgTarget = document.querySelector(".ghost-target-floater-mg");
+const gravityFactors = document.querySelectorAll(".gravity-factor");
+const gravityWords = document.querySelectorAll(".gravity-word");
+const slideVolume = document.querySelector(".slide-volume");
+const slideEq = document.querySelector(".slide-eq");
+const slideMass = document.querySelector(".slide-mass");
 const depthDiffSource = document.querySelector(".ghost-source-depth-diff");
 const heightTarget = document.querySelector(".ghost-target-height");
 const buoyantForceSource = document.querySelector(".ghost-source-buoyant-force");
@@ -87,12 +98,15 @@ const pressureCondensedTarget = document.querySelector(".ghost-target-pressure-c
 const depthSimplifyTarget = document.querySelector(".ghost-target-depth-simplify");
 
 let step = 1;
-const maxStep = 35;
+const maxStep = 38;
 const heightGhostStep = 30;
 const buoyantHeightCondenseStep = 31;
-const floaterWeightStep = 32;
-const neutralLabelGhostStep = 34;
-const neutralGhostStep = 35;
+const heightEndStep = 32;
+const floaterVolumeStep = 33;
+const floaterWeightStep = 34;
+const neutralLabelGhostStep = 36;
+const neutralGhostStep = 37;
+const gravityCancelStep = 38;
 const buoyantStep = 26;
 const buoyantGhostStep = 27;
 const buoyantProductGhostStep = 28;
@@ -126,6 +140,7 @@ function clearGhosts() {
 
 function visibleText(el) {
   const clone = el.cloneNode(true);
+  clone.querySelectorAll(".is-hidden, [data-show-at]:not(.is-visible)").forEach((node) => node.remove());
   const originals = el.querySelectorAll(".term-swap");
   clone.querySelectorAll(".term-swap").forEach((swap, index) => {
     const swapped = originals[index]?.classList.contains("is-swapped");
@@ -177,6 +192,27 @@ function playGhost(source, target, options = {}) {
       window.setTimeout(() => ghost.remove(), 280);
     }, 40);
   }, 870);
+}
+
+function playDepart(fromRect, text) {
+  const ghost = document.createElement("span");
+  ghost.className = "ghost";
+  ghost.textContent = text;
+  ghost.style.left = `${fromRect.left}px`;
+  ghost.style.top = `${fromRect.top}px`;
+  ghost.style.opacity = "1";
+  ghost.style.transition =
+    "left 0.85s cubic-bezier(0.4, 0, 0.2, 1), top 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.85s ease";
+  document.body.appendChild(ghost);
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      ghost.style.top = `${fromRect.top - 42}px`;
+      ghost.style.opacity = "0";
+    });
+  });
+
+  window.setTimeout(() => ghost.remove(), 900);
 }
 
 function placeLeader(svg, line, fromEl, toEl) {
@@ -245,6 +281,11 @@ function render(options = {}) {
   pressureAreaTerm.classList.toggle("is-hidden", step >= topProductCondenseStep);
   pressureAreaTermBottom.classList.toggle("is-hidden", step >= bottomProductCondenseStep);
   buoyantDiffTerm.classList.toggle("is-hidden", step >= buoyantHeightCondenseStep);
+  heightFront.classList.toggle("is-hidden", step >= heightEndStep);
+  areaHeightTerm.classList.toggle("is-hidden", step >= floaterVolumeStep);
+  gravityFactors.forEach((el) => {
+    el.classList.toggle("is-hidden", step >= gravityCancelStep);
+  });
   heightDepthSwap.classList.toggle("is-swapped", step > depthGhostUpStep);
   heightDepthSwap.classList.toggle("is-open", step >= depthRevealStep && step <= depthGhostUpStep);
 
@@ -333,6 +374,14 @@ function render(options = {}) {
     condensedBuoyant.classList.remove("is-waiting");
   }
 
+  if (step < heightEndStep) {
+    heightEndTarget.classList.remove("is-waiting");
+  }
+
+  if (step < floaterVolumeStep) {
+    floaterVolumeTarget.classList.remove("is-waiting");
+  }
+
   if (step < neutralLabelGhostStep) {
     buoyantForceTarget.classList.remove("is-waiting");
     floaterWeightNameTarget.classList.remove("is-waiting");
@@ -341,6 +390,12 @@ function render(options = {}) {
   if (step < neutralGhostStep) {
     buoyantHeightTarget.classList.remove("is-waiting");
     floaterMgTarget.classList.remove("is-waiting");
+  }
+
+  if (step < gravityCancelStep) {
+    slideVolume.classList.remove("is-waiting");
+    slideEq.classList.remove("is-waiting");
+    slideMass.classList.remove("is-waiting");
   }
 
   waterSurface.classList.toggle("is-pulsing", step >= pressureStep);
@@ -444,6 +499,16 @@ nextButton.addEventListener("click", () => {
     if (step === buoyantHeightCondenseStep) {
       condensedBuoyant.classList.add("is-waiting");
     }
+    let heightEndFrom = null;
+    if (step === heightEndStep) {
+      heightEndFrom = heightEndSource.getBoundingClientRect();
+      heightEndTarget.classList.add("is-waiting");
+    }
+    let areaHeightFrom = null;
+    if (step === floaterVolumeStep) {
+      areaHeightFrom = areaHeightSource.getBoundingClientRect();
+      floaterVolumeTarget.classList.add("is-waiting");
+    }
     if (step === neutralLabelGhostStep) {
       buoyantForceTarget.classList.add("is-waiting");
       floaterWeightNameTarget.classList.add("is-waiting");
@@ -451,6 +516,16 @@ nextButton.addEventListener("click", () => {
     if (step === neutralGhostStep) {
       buoyantHeightTarget.classList.add("is-waiting");
       floaterMgTarget.classList.add("is-waiting");
+    }
+    const gravityFrom = [];
+    const slideFrom = [];
+    if (step === gravityCancelStep) {
+      gravityWords.forEach((el) => {
+        gravityFrom.push(el.getBoundingClientRect());
+      });
+      [slideVolume, slideEq, slideMass].forEach((el) => {
+        slideFrom.push(el.getBoundingClientRect());
+      });
     }
     render({
       skipHide:
@@ -564,6 +639,16 @@ nextButton.addEventListener("click", () => {
         render();
       });
     }
+    if (step === heightEndStep) {
+      requestAnimationFrame(() => {
+        playGhost(heightEndSource, heightEndTarget, { fromRect: heightEndFrom });
+      });
+    }
+    if (step === floaterVolumeStep) {
+      requestAnimationFrame(() => {
+        playGhost(areaHeightSource, floaterVolumeTarget, { fromRect: areaHeightFrom });
+      });
+    }
     if (step === neutralLabelGhostStep) {
       requestAnimationFrame(() => {
         playGhost(buoyantForceSource, buoyantForceTarget);
@@ -574,6 +659,14 @@ nextButton.addEventListener("click", () => {
       requestAnimationFrame(() => {
         playGhost(buoyantHeightSource, buoyantHeightTarget);
         playGhost(floaterMgSource, floaterMgTarget);
+      });
+    }
+    if (step === gravityCancelStep) {
+      requestAnimationFrame(() => {
+        gravityFrom.forEach((from) => playDepart(from, "gravity"));
+        [slideVolume, slideEq, slideMass].forEach((el, index) => {
+          playGhost(el, el, { fromRect: slideFrom[index] });
+        });
       });
     }
   }

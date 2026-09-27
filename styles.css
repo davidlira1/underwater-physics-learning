@@ -255,12 +255,20 @@ body {
   margin: 0;
 }
 
-.buoyant-label {
+.buoyant-label-wrap {
   grid-column: 2;
   grid-row: 5;
   align-self: start;
+}
+
+.buoyant-label {
   margin: 0;
   white-space: nowrap;
+}
+
+.principle-name {
+  margin: 0.15rem 0 0;
+  max-width: 9.6rem;
 }
 
 .buoyant-eq {
@@ -307,7 +315,20 @@ body {
   grid-column: 3;
   grid-row: 8;
   align-self: start;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
   margin-top: 1.35rem;
+}
+
+.neutral-left-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mass-water-note {
+  margin: 0.35rem 0 0;
 }
 
 .bottom-pressure-eq {
@@ -517,7 +538,10 @@ body {
 .mass-gravity-term.is-hidden,
 .pressure-area-term.is-hidden,
 .pressure-area-term-bottom.is-hidden,
-.buoyant-diff-term.is-hidden {
+.buoyant-diff-term.is-hidden,
+.height-front.is-hidden,
+.area-height-term.is-hidden,
+.gravity-factor.is-hidden {
   display: none;
 }
 
